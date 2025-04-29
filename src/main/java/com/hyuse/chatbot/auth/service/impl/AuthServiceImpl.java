@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthServiceInterface {
     private final JwtServiceImpl jwtServiceImpl;
     private final AuthenticationManager authManager;
     private final UserCreationProducerImpl producer;
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     public AuthServiceImpl(JwtServiceImpl jwtServiceImpl, AuthenticationManager authManager, UserCreationProducerImpl producer) {
         this.jwtServiceImpl = jwtServiceImpl;

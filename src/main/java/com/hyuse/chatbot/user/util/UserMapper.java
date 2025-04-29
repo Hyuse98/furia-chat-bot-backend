@@ -2,17 +2,10 @@ package com.hyuse.chatbot.user.util;
 
 import com.hyuse.chatbot.user.dto.UserDTO;
 import com.hyuse.chatbot.user.model.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-
-    private final PasswordEncoder passwordEncoder;
-
-    public UserMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public User toEntity(UserDTO userDTO) {
 

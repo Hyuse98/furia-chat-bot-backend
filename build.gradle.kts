@@ -66,7 +66,7 @@ dependencies {
 
 	// AMQP Extra
 	implementation("org.springframework.amqp:spring-rabbit-stream")
-	runtimeOnly("org.springframework.modulith:spring-modulith-events-amqp")
+//	runtimeOnly("org.springframework.modulith:spring-modulith-events-amqp")
 
 	// OpenAPI / Swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")

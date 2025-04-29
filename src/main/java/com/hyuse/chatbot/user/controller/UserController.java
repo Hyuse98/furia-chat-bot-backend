@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/name/{fullName}")
+    @GetMapping("/name/{username}")
     public ResponseEntity<EntityModel<User>> getUserByUsername(@PathVariable String username) {
 
         User user = userService.findUserByUsername(username);
@@ -52,10 +52,10 @@ public class UserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/email/{emailAddress}")
-    public ResponseEntity<EntityModel<User>> getUserByEmail(@PathVariable String emailAddress) {
+    @GetMapping("/email/{email}")
+    public ResponseEntity<EntityModel<User>> getUserByEmail(@PathVariable String email) {
 
-        var user = userService.findUserByEmail(emailAddress);
+        var user = userService.findUserByEmail(email);
         EntityModel<User> entityModel = userAssembler.toModel(user);
         return ResponseEntity.ok(entityModel);
     }

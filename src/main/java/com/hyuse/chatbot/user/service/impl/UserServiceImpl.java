@@ -22,13 +22,11 @@ import java.util.UUID;
 public class UserServiceImpl implements UserServiceInterface {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -41,10 +39,11 @@ public class UserServiceImpl implements UserServiceInterface {
             throw new UserAlreadyExistsException("Já existe um usuário com o email: " + email);
         }
 
+        var password = passwordEncoder.encode(rawPassword);
+
         User user = new User();
         user.setEmail(email);
-        user.setPassword(rawPassword);
-        user.setUsername("");
+        user.setPassword(password);
         user.setCreateAt(LocalDateTime.now());
 
         return userRepository.save(user);
