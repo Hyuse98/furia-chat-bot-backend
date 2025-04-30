@@ -1,0 +1,9 @@
+CREATE TABLE players(
+
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR (255)
+);
+
+CREATE SEQUENCE players_seq
+    START WITH 1
+    INCREMENT BY 50;

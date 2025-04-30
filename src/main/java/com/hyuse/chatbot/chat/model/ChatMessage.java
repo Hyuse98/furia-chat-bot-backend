@@ -12,4 +12,3 @@ public class ChatMessage {
     private String message;
     private MessageType type; // USER_MESSAGE, BOT_RESPONSE, COMMAND
 }
-
