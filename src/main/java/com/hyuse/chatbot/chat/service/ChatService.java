@@ -22,16 +22,12 @@ public class ChatService {
     }
 
     private ChatMessage handleCommand(String command, String userId) {
-        switch (command) {
-            case "start":
-                return reply(userId, "Bem-vindo ao chatbot!");
-            case "help":
-                return reply(userId, "Comandos disponíveis: /start, /help, /info");
-            case "info":
-                return reply(userId, "Este é um chatbot simples em Spring Boot.");
-            default:
-                return reply(userId, "Comando não reconhecido.");
-        }
+        return switch (command) {
+            case "start" -> reply(userId, "Bem-vindo ao chatbot!");
+            case "help" -> reply(userId, "Comandos disponíveis: /start, /help, /info");
+            case "info" -> reply(userId, "Este é um chatbot simples em Spring Boot.");
+            default -> reply(userId, "Comando não reconhecido.");
+        };
     }
 
     private ChatMessage reply(String userId, String message) {
