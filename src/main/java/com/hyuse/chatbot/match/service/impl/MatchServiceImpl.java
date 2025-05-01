@@ -1,6 +1,6 @@
 package com.hyuse.chatbot.match.service.impl;
 
-import com.hyuse.chatbot.match.dto.MatchDTO;
+import com.hyuse.chatbot.match.model.dto.MatchDTO;
 import com.hyuse.chatbot.match.model.Match;
 import com.hyuse.chatbot.match.model.MatchStatus;
 import com.hyuse.chatbot.match.repository.MatchRepository;

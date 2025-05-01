@@ -1,6 +1,6 @@
 package com.hyuse.chatbot.user.service;
 
-import com.hyuse.chatbot.user.dto.UserDTO;
+import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.user.model.User;
 
 import java.util.Collection;

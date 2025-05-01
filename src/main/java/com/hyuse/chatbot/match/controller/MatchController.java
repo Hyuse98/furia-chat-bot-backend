@@ -1,6 +1,6 @@
 package com.hyuse.chatbot.match.controller;
 
-import com.hyuse.chatbot.match.dto.MatchDTO;
+import com.hyuse.chatbot.match.model.dto.MatchDTO;
 import com.hyuse.chatbot.match.model.Match;
 import com.hyuse.chatbot.match.service.MatchServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

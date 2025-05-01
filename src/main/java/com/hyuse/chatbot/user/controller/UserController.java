@@ -1,6 +1,6 @@
 package com.hyuse.chatbot.user.controller;
 
-import com.hyuse.chatbot.user.dto.UserDTO;
+import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.user.model.User;
 import com.hyuse.chatbot.user.service.impl.UserServiceImpl;
 import com.hyuse.chatbot.user.util.UserAssembler;

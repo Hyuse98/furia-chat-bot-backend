@@ -1,12 +1,11 @@
 package com.hyuse.chatbot.user.service.impl;
 
-import com.hyuse.chatbot.user.dto.UserDTO;
+import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.exceptions.UserAlreadyExistsException;
 import com.hyuse.chatbot.exceptions.UserNotFoundException;
 import com.hyuse.chatbot.user.model.User;
 import com.hyuse.chatbot.user.repository.UserRepository;
 import com.hyuse.chatbot.user.service.UserServiceInterface;
-import com.hyuse.chatbot.user.util.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

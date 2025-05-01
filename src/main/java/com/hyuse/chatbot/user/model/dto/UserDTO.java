@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.user.dto;
+package com.hyuse.chatbot.user.model.dto;
 
 import java.time.LocalDateTime;
 

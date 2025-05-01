@@ -1,6 +1,6 @@
 package com.hyuse.chatbot.player.controller;
 
-import com.hyuse.chatbot.player.dto.PlayerDTO;
+import com.hyuse.chatbot.player.model.dto.PlayerDTO;
 import com.hyuse.chatbot.player.model.Player;
 import com.hyuse.chatbot.player.service.PlayerServiceInterface;
 import jakarta.validation.Valid;

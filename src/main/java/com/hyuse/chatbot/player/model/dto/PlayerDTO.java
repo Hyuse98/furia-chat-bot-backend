@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.player.dto;
+package com.hyuse.chatbot.player.model.dto;
 
 public record PlayerDTO(
 

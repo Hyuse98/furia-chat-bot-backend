@@ -1,12 +1,11 @@
 package com.hyuse.chatbot.match.service;
 
-import com.hyuse.chatbot.match.dto.MatchDTO;
+import com.hyuse.chatbot.match.model.dto.MatchDTO;
 import com.hyuse.chatbot.match.model.Match;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface MatchServiceInterface {
 

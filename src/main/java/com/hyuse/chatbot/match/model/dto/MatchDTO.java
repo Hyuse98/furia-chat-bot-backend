@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.match.dto;
+package com.hyuse.chatbot.match.model.dto;
 
 import com.hyuse.chatbot.match.model.MatchResults;
 import com.hyuse.chatbot.match.model.MatchStatus;
