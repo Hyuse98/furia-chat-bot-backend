@@ -22,10 +22,10 @@ public class JwtServiceImpl implements JwtServiceInterface {
     }
 
     @Override
-    public String generateToken(String email) {
+    public String generateToken(String username) {
         long expiration = 1000 * 60 * 60;
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(username) //TODO <-
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(secretKey)

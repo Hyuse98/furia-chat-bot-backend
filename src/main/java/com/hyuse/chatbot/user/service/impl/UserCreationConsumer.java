@@ -17,7 +17,7 @@ public class UserCreationConsumer {
     @RabbitListener(queues = "auth.user.create.queue")
     public void consume(UserCreationMessage message) {
         System.out.println("Mensagem recebida: " + message);
-        userService.createUser(message.getEmail(), message.getPassword());
+        userService.createUser(message.getUsername(), message.getEmail(), message.getPassword());
     }
 }
 

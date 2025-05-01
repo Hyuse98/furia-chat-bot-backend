@@ -1,9 +1,9 @@
 package com.hyuse.chatbot.user.service.impl;
 
-import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.exceptions.UserAlreadyExistsException;
 import com.hyuse.chatbot.exceptions.UserNotFoundException;
 import com.hyuse.chatbot.user.model.User;
+import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.user.repository.UserRepository;
 import com.hyuse.chatbot.user.service.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +31,21 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     @Transactional
-    public User createUser(String email, String rawPassword) {
+    public User createUser(String username, String email, String rawPassword) {
 
-        Optional<User> existingUser = userRepository.findByEmail(email);
-        if (existingUser.isPresent()) {
-            throw new UserAlreadyExistsException("Já existe um usuário com o email: " + email);
-        }
+        userRepository.findByEmail(email)
+                .ifPresent(user -> {
+                    throw new UserAlreadyExistsException("Já existe um usuário com o email: " + email);
+                });
 
+        userRepository.findByUsername(username)
+                .ifPresent(user -> {
+                    throw new UserAlreadyExistsException("Já existe um usuário com o username: " + username);
+                });
         var password = passwordEncoder.encode(rawPassword);
 
         User user = new User();
+        user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
         user.setCreateAt(LocalDateTime.now());

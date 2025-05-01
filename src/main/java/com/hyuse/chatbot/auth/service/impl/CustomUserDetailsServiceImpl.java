@@ -22,13 +22,13 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userRepository.findByEmail(email)
+        return userRepository.findByUsername(username)
                 .map(user -> {
                     String encodedPassword = user.getPassword();
                     logger.debug("Encoded password from database: {}", encodedPassword);
-                    return User.withUsername(user.getEmail())
+                    return User.withUsername(user.getUsername())
                             .password(encodedPassword) //ByCrypt SHA-256
                             .authorities("USER")
                             .build();

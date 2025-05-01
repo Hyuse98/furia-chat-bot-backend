@@ -36,6 +36,7 @@ public class AuthServiceImpl implements AuthServiceInterface {
 
         UserCreationMessage message = new UserCreationMessage();
 
+        message.setUsername(request.username()); //TODO <-
         message.setEmail(request.email());
         message.setPassword(request.password());
 
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthServiceInterface {
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.email(),
+                            request.username(), //TODO <-
                             request.password()
                     )
             );

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserServiceInterface {
 
-    User createUser(String email, String rawPassword);
+    User createUser(String username ,String email, String rawPassword);
     User updateUser(UUID id, UserDTO userDTO);
 
     User findUserById(UUID id);
