@@ -22,6 +22,6 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     Optional<Match> findByDateHour(LocalDateTime date);
 
-    Page<Match> findAll(Pageable pageable);
+    List<Match> findAllByMatchStatus(MatchStatus matchStatus);
 }
 

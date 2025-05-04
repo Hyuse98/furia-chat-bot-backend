@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -70,7 +71,15 @@ public class MatchServiceImpl implements MatchServiceInterface {
                 .orElseThrow(() -> new NoSuchElementException("Partida não encontrada na data: " + date));
     }
 
+    @Override
+    public List<Match> findMatchesByTeam(String teamName){
+        return matchRepository.findAll();
+    }
 
+    @Override
+    public List<Match> listByMatchStatus(MatchStatus matchStatus) {
+        return matchRepository.findAllByMatchStatus(matchStatus);
+    }
 
     public Page<Match> listMatchs(Pageable pageable) {
         return matchRepository.findAll(pageable);
