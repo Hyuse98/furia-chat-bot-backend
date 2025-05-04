@@ -6,9 +6,9 @@ import com.hyuse.chatbot.player.repository.PlayerRepository;
 import com.hyuse.chatbot.player.service.PlayerServiceInterface;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PlayerServiceImpl implements PlayerServiceInterface {
@@ -34,6 +34,7 @@ public class PlayerServiceImpl implements PlayerServiceInterface {
                 .orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado com o ID: " + id));
 
         existingPlayer.setName(playerDTO.name());
+        existingPlayer.setTeam(playerDTO.team());
         playerRepository.save(existingPlayer);
     }
 
@@ -52,8 +53,8 @@ public class PlayerServiceImpl implements PlayerServiceInterface {
     }
 
     @Override
-    public Page<Player> listPlayers(Pageable pageable) {
-        return playerRepository.findAll(pageable);
+    public List<Player> listPlayersByTeam(String team) {
+        return playerRepository.findByTeam(team);
     }
 
     //TODO Trata o erro corretamente

@@ -54,7 +54,7 @@ public class PlayerController {
         Player player = playerService.getPlayerById(id);
         EntityModel<Player> entityModel = EntityModel.of(player);
         entityModel.add(linkTo(methodOn(PlayerController.class).getPlayerById(id)).withSelfRel());
-        entityModel.add(linkTo(methodOn(PlayerController.class).listPlayers(Pageable.unpaged())).withRel("players"));
+//        entityModel.add(linkTo(methodOn(PlayerController.class).listPlayers()).withRel("players"));
         return ResponseEntity.ok(entityModel);
     }
 
@@ -63,26 +63,21 @@ public class PlayerController {
         Player player = playerService.getPlayerByName(name);
         EntityModel<Player> entityModel = EntityModel.of(player);
         entityModel.add(linkTo(methodOn(PlayerController.class).getPlayerByName(name)).withSelfRel());
-        entityModel.add(linkTo(methodOn(PlayerController.class).listPlayers(Pageable.unpaged())).withRel("players"));
+//        entityModel.add(linkTo(methodOn(PlayerController.class).listPlayers()).withRel("players"));
         return ResponseEntity.ok(entityModel);
     }
 
-    @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<Player>>> listPlayers(@PageableDefault(size = 10, page = 0) Pageable pageable) {
-        Page<Player> playersPage = playerService.listPlayers(pageable);
-
-        List<EntityModel<Player>> playerModels = playersPage.getContent().stream()
-                .map(player -> EntityModel.of(player,
-                        linkTo(methodOn(PlayerController.class).getPlayerById(player.getId())).withSelfRel()))
-                .collect(Collectors.toList());
-
-        PagedModel.PageMetadata metadata = new PagedModel.PageMetadata(playersPage.getSize(), playersPage.getNumber(), playersPage.getTotalElements(), playersPage.getTotalPages());
-
-        PagedModel<EntityModel<Player>> pagedModel = PagedModel.of(playerModels, metadata,
-                linkTo(methodOn(PlayerController.class).listPlayers(pageable)).withSelfRel());
-
-        return ResponseEntity.ok(pagedModel);
-    }
+//    @GetMapping
+//    public ResponseEntity<EntityModel<Player>> listPlayers(@PathVariable String team) {
+//        List<Player> players = playerService.listPlayers(team);
+//
+//        EntityModel<Player> playerModels = players.stream()
+//                .map(player -> EntityModel.of(player,
+//                        linkTo(methodOn(PlayerController.class).getPlayerById(player.getId())).withSelfRel()))
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(playerModels);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlayerById(@PathVariable Long id) {

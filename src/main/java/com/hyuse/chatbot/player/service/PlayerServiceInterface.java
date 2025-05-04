@@ -5,6 +5,8 @@ import com.hyuse.chatbot.player.model.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PlayerServiceInterface {
 
     void createPlayer(PlayerDTO playerDTO);
@@ -15,7 +17,7 @@ public interface PlayerServiceInterface {
 
     Player getPlayerByName(String name);
 
-    Page<Player> listPlayers(Pageable pageable);
+    List<Player> listPlayersByTeam(String team);
 
     void deletePlayerById(Long id);
 }
