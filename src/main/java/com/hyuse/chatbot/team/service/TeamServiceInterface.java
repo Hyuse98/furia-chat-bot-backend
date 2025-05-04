@@ -5,6 +5,8 @@ import com.hyuse.chatbot.team.model.dto.TeamDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface TeamServiceInterface {
 
     void createTeam(TeamDTO teamDTO);
@@ -15,7 +17,7 @@ public interface TeamServiceInterface {
     Team getTeamByName(String name);
     Team getTeamByTeamTag(String tag);
 
-    Page<Team> listTeams(Pageable pageable);
-    Page<Team> listTeamsByCountry(String country, Pageable pageable);
+    List<Team> listTeams();
+    List<Team> listTeamsByCountry(String country);
 
 }

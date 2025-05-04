@@ -6,9 +6,9 @@ import com.hyuse.chatbot.team.repository.TeamRepository;
 import com.hyuse.chatbot.team.service.TeamServiceInterface;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeamServiceImpl implements TeamServiceInterface {
@@ -64,12 +64,12 @@ public class TeamServiceImpl implements TeamServiceInterface {
     }
 
     @Override
-    public Page<Team> listTeams(Pageable pageable) {
-        return teamRepository.findAll(pageable);
+    public List<Team> listTeams() {
+        return teamRepository.findAll();
     }
 
     @Override
-    public Page<Team> listTeamsByCountry(String country, Pageable pageable) {
-        return teamRepository.findByTeamCountry(country, pageable);
+    public List<Team> listTeamsByCountry(String country) {
+        return teamRepository.findByTeamCountry(country);
     }
 }
