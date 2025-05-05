@@ -1,51 +1,63 @@
 package com.hyuse.chatbot.match.model;
 
+import com.hyuse.chatbot.map.model.Map;
+import com.hyuse.chatbot.team.model.Team;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "matchs")
+@Entity(name = "matches")
 public class Match {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "team_a")
-    private String teamA;
-
-    @Column(name = "team_b")
-    private String teamB;
-
-    @Column(name = "date_hour")
-    private LocalDateTime dateHour;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "match_status")
-    private MatchStatus matchStatus;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "match_result")
-    private MatchResults matchResult;
-
-    @Column(name = "match_scoreboard")
-    private String matchScoreboard;
 
     public Match() {
     }
 
-    public Match(String matchScoreboard, MatchResults matchResult, MatchStatus matchStatus, LocalDateTime dateHour, String teamB, String teamA) {
-        this.matchScoreboard = matchScoreboard;
-        this.matchResult = matchResult;
-        this.matchStatus = matchStatus;
+    public Match(Team teamA_Team, Team teamB_Team, LocalDateTime dateHour, MatchStatus matchStatus,
+                 Integer teamAScore, Integer teamBScore, MatchResults matchResult, List<Map> mapPool) {
+        this.teamA_Team = teamA_Team;
+        this.teamB_Team = teamB_Team;
         this.dateHour = dateHour;
-        this.teamB = teamB;
-        this.teamA = teamA;
+        this.matchStatus = matchStatus;
+        this.teamAScore = teamAScore;
+        this.teamBScore = teamBScore;
+        this.matchResult = matchResult;
+        this.mapPool = mapPool;
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "team_a_id", nullable = false)
+    private Team teamA_Team;
+
+    @ManyToOne
+    @JoinColumn(name = "team_b_id", nullable = false)
+    private Team teamB_Team;
+
+    private LocalDateTime dateHour;
+
+    private MatchStatus matchStatus;
+
+    private Integer teamAScore;
+
+    private Integer teamBScore;
+
+    private MatchResults matchResult;
+
+    @ManyToMany
+    @JoinTable(
+            name = "match_maps",
+            joinColumns = @JoinColumn(name = "match_id"),
+            inverseJoinColumns = @JoinColumn(name = "map_id")
+    )
+    private List<Map> mapPool;
 }
 

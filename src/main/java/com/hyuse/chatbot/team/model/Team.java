@@ -1,33 +1,41 @@
 package com.hyuse.chatbot.team.model;
 
+import com.hyuse.chatbot.player.model.Player;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @Entity(name = "teams")
 public class Team {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "team_name")
-    private String teamName;
-
-    @Column(name = "team_tag")
-    private String teamTag;
-
-    @Column(name = "team_country")
-    private String teamCountry;
-
     public Team() {
     }
 
-    public Team(String teamName, String teamTag, String teamCountry) {
+    public Team(String teamName, String teamTag, String teamRegion, List<Player> players, String hltvUrl) {
         this.teamName = teamName;
         this.teamTag = teamTag;
-        this.teamCountry = teamCountry;
+        this.teamRegion = teamRegion;
+        this.players = players;
+        this.hltvUrl = hltvUrl;
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String teamName;
+
+    private String teamTag;
+
+    private String teamRegion;
+
+    @OneToMany(mappedBy = "team")
+    private List<Player> players;
+
+    private String hltvUrl;
 }

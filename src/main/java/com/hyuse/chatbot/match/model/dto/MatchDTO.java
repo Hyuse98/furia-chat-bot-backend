@@ -1,22 +1,22 @@
 package com.hyuse.chatbot.match.model.dto;
 
+import com.hyuse.chatbot.map.model.Map;
 import com.hyuse.chatbot.match.model.MatchResults;
 import com.hyuse.chatbot.match.model.MatchStatus;
+import com.hyuse.chatbot.team.model.Team;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record MatchDTO(
 
+        Team teamA_Team,
+        Team teamB_Team,
         LocalDateTime dateHour,
-
-        String teamA,
-
-        String teamB,
-
         MatchStatus matchStatus,
-
+        Integer teamAScore,
+        Integer teamBScore,
         MatchResults matchResult,
-
-        String matchScoreboard
+        List<Map> mapPool
 ) {
 }

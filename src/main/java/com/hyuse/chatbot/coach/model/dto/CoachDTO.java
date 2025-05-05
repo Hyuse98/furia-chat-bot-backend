@@ -1,10 +1,9 @@
-package com.hyuse.chatbot.player.model.dto;
+package com.hyuse.chatbot.coach.model.dto;
 
-public record PlayerDTO(
-
+public record CoachDTO (
         String name,
         String username,
         String team,
         String hltvUrl
-) {
+){
 }

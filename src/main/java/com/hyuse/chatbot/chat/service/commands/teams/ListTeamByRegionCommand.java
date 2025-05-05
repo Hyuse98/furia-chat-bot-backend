@@ -35,7 +35,7 @@ public class ListTeamByRegionCommand extends BaseCommand {
             response.append("<hr>");
 
             teams.forEach(team -> {
-                response.append("• **").append(team.getTeamName()).append("**: ").append(team.getTeamCountry()).append("\n");
+                response.append("• **").append(team.getTeamName()).append("**: ").append(team.getTeamRegion()).append("\n");
                 response.append("<hr>");
             });
 

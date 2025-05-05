@@ -35,8 +35,8 @@ public class ListClosedMatchesCommand extends BaseCommand {
             StringBuilder response = new StringBuilder("📅 **Partidas Encerradas:**\n\n");
             response.append("<hr>");
             list.forEach(match -> {
-                response.append("🏆 **").append(match.getTeamA()).append("** vs **")
-                        .append(match.getTeamB()).append("**\n");
+                response.append("🏆 **").append(match.getTeamA_Team()).append("** vs **")
+                        .append(match.getTeamB_Team()).append("**\n");
                 response.append("📆 ").append(match.getDateHour().format(DATE_FORMATTER)).append("\n");
                 response.append("🔄 Status: **").append(formatStatus(match)).append("**\n\n");
                 response.append("<hr>\n");
