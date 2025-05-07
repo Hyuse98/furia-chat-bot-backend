@@ -6,7 +6,7 @@
 
 ## Overview
 
-A chat bot with simple commands to fetch information about matches, teams, and players related to Furia's CS2 team, allowing queries by name, team tag, region, and match status.
+A chat bot with simple commands to fetch information about matches, teams, and players related to Furia's CS2 teams, allowing queries by name, teams tag, region, and matches status.
 
 ## Key Features
 
@@ -17,20 +17,20 @@ Query scheduled, completed, and live matches:
 - `/LiveMatches` - Get matches currently in progress
 
 ### Team Commands
-Retrieve team-related data:
-- `/TagTeam <Team Tag>` - Find team by tag name
-- `/NameTeam <Team Name>` - Find team by full name
+Retrieve teams-related data:
+- `/TagTeam <Team Tag>` - Find teams by tag name
+- `/NameTeam <Team Name>` - Find teams by full name
 - `/RegionTeams <Region>` - List teams by region
 
 ### Player Commands
-Access player information:
-- `/NamePlayer <Name>` - Find player by name
-- `/TeamPlayers <Team Name>` - List all players on a specific team
+Access players information:
+- `/NamePlayer <Name>` - Find players by name
+- `/TeamPlayers <Team Name>` - List all players on a specific teams
 
 ### RoadMap Features
 
 - WebScrap to collect real data
-- WebSockets to update real time match results
+- WebSockets to update real time matches results
 - Improve data models to more details
 
 ## Getting Started
@@ -76,12 +76,70 @@ Access player information:
 
 ## API Usage
 
-The API is consumed by the frontend which listens to `http://localhost:8080/api/chat` for user commands.
+The API is consumed by the frontend which listens to `http://localhost:8080/api/chat` for users commands.
 
 ### Available Endpoints
 All available endpoints can be viewed via OpenAPI Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 
-## Architecture
+## Diagrams
+
+### UML Class Diagram
+````mermaid
+classDiagram
+  class User {
+    +id: UUID
+    +username: String
+    +email: String
+    +password: String
+    +createdAt: LocalDateTime
+  }
+  class Coach {
+    +id: Long
+    +name: String
+    +username: String
+    +teams: String
+    +hltvUrl: String
+  }
+  class Players {
+    +id: Long
+    +name: String
+    +username: String
+    +teams: String
+    +hltvUrl: String
+  }
+  class Team {
+    +id: Long
+    +teamName: String
+    +teamTag: String
+    +teamRegion: String
+    +players: List<Players>
+    +hltvUrl: String
+  }
+  class Matchs {
+    +id: Long
+    +teamA_Teams: Team
+    +teamB_Teams: Team
+    +dateHour: LocalDateTime
+    +matchesStatus: MatchStatus
+    +teamAScore: int
+    +teamBScore: int
+    +matchResult: matchResult
+    +mapPool: List<Maps>
+  }
+  class Maps {
+    +id: Long
+    +mapName: String
+    +teamAMapScore: int
+    +teamBMapScore: int
+  }
+
+  Coach --|> Team : belongs to
+  Players --|> Team : belongs to
+  Team "1" -- "*" Matchs : has >
+  Maps "*" -- "1..*" Matchs : included in
+````
+
+### Architecture
 
 ```mermaid
 graph LR
@@ -101,7 +159,7 @@ sequenceDiagram
     Note over Frontend,Backend: Authentication
 
     Frontend->>Backend: POST /auth/register (Registration data)
-    Backend->>Database: Save new user
+    Backend->>Database: Save new users
     Database-->>Backend: Success/Failure
     Backend-->>Frontend: 200 OK / 400 Bad Request
 
@@ -131,7 +189,7 @@ sequenceDiagram
     Frontend->>Backend: POST /api/chat (Message/Command, Token)
     Backend->>ChatService: Process message/command
     alt Command (e.g., /list_users)
-        ChatService->>Database: Fetch data (e.g., user list)
+        ChatService->>Database: Fetch data (e.g., users list)
         Database-->>ChatService: Data found
         ChatService->>Backend: Command response
     else Normal message
@@ -155,23 +213,28 @@ sequenceDiagram
 
 ```
 furia-chat-bot/
-  ├── src/
-  │   ├── main/
-  │   │   ├── java/com/hyuse/chatbot/
-  │   │   │   ├── auth/
-  │   │   │   ├── chat/
-  │   │   │   ├── config/
-  │   │   │   ├── exceptions/
-  │   │   │   ├── match/
-  │   │   │   ├── player/
-  │   │   │   ├── team/
-  │   │   │   └── FuriaChatBotApplication.java
-  │   │   └── resources/
-  │   │       ├── db/migration
-  │   │       ├── application-prod.yml
-  │   │       └── application-dev.yml
-  │   └── test/
-  └── build.gradle
+├── src/
+│   ├── main/
+│   │   ├── java/com/hyuse/chatbot/
+│   │   │   ├── auth/
+│   │   │   ├── chat/
+│   │   │   ├── core/
+│   │   │   │   ├── constants/
+│   │   │   │   └── exceptions/
+│   │   │   ├── config/
+│   │   │   ├── matches/
+│   │   │   ├── players/
+│   │   │   ├── teams/
+│   │   │   ├── user/
+│   │   │   ├── maps/
+│   │   │   ├── coach/
+│   │   │   └── FuriaChatBotApplication.java
+│   │   └── resources/
+│   │       ├── db/migration
+│   │       ├── application-prod.yml
+│   │       └── application-dev.yml
+│   └── test/
+└── build.gradle
   
 frontend/
     ├── src/
@@ -201,7 +264,7 @@ frontend/
 
 The application includes comprehensive error handling:
 - Invalid commands return helpful error messages
-- Network errors are displayed to the user
+- Network errors are displayed to the users
 - Database connection issues are logged and reported
 
 ## Development
