@@ -1,7 +1,7 @@
 package com.hyuse.chatbot.user.service.impl;
 
-import com.hyuse.chatbot.exceptions.UserAlreadyExistsException;
-import com.hyuse.chatbot.exceptions.UserNotFoundException;
+import com.hyuse.chatbot.core.exceptions.UserAlreadyExistsException;
+import com.hyuse.chatbot.core.exceptions.UserNotFoundException;
 import com.hyuse.chatbot.user.model.User;
 import com.hyuse.chatbot.user.model.dto.UserDTO;
 import com.hyuse.chatbot.user.repository.UserRepository;

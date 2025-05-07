@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.exceptions;
+package com.hyuse.chatbot.core.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

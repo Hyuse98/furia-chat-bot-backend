@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.exceptions;
+package com.hyuse.chatbot.core.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.hyuse.chatbot.player.model;
+package com.hyuse.chatbot.coach.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,13 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "players")
-public class Player {
+@Entity
+@Table(name = "coaches")
+public class Coach {
 
-    public Player() {
+    public Coach() {
     }
 
-    public Player(String name, String username, String team, String hltvUrl) {
+    public Coach(String name, String username, String team, String hltvUrl) {
         this.name = name;
         this.username = username;
         this.team = team;

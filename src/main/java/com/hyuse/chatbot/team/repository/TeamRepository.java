@@ -1,8 +1,6 @@
 package com.hyuse.chatbot.team.repository;
 
 import com.hyuse.chatbot.team.model.Team;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +13,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     Optional<Team> findByTeamName(String name);
     Optional<Team> findByTeamTag(String tag);
 
-    List<Team> findByTeamCountry(String country);
+    List<Team> findByTeamRegion(String region);
 }

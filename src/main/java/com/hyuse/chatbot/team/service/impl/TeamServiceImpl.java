@@ -22,7 +22,7 @@ public class TeamServiceImpl implements TeamServiceInterface {
 
     @Override
     public void createTeam(TeamDTO teamDTO) {
-        Team team = new Team(teamDTO.teamName(), teamDTO.teamTag(), teamDTO.teamCountry());
+        Team team = new Team(teamDTO.teamName(), teamDTO.teamTag(), teamDTO.teamRegion(), teamDTO.players(), teamDTO.hltvUrl());
         teamRepository.save(team);
     }
 
@@ -33,7 +33,7 @@ public class TeamServiceImpl implements TeamServiceInterface {
 
         existingTeam.setTeamName(teamDTO.teamName());
         existingTeam.setTeamTag(teamDTO.teamTag());
-        existingTeam.setTeamCountry(teamDTO.teamCountry());
+        existingTeam.setTeamRegion(teamDTO.teamRegion());
         teamRepository.save(existingTeam);
     }
 
@@ -70,6 +70,6 @@ public class TeamServiceImpl implements TeamServiceInterface {
 
     @Override
     public List<Team> listTeamsByCountry(String country) {
-        return teamRepository.findByTeamCountry(country);
+        return teamRepository.findByTeamRegion(country);
     }
 }

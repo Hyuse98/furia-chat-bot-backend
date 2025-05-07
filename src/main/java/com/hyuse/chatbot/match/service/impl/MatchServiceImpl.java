@@ -1,10 +1,13 @@
 package com.hyuse.chatbot.match.service.impl;
 
+import com.hyuse.chatbot.map.model.Map;
+import com.hyuse.chatbot.match.model.MatchResults;
 import com.hyuse.chatbot.match.model.dto.MatchDTO;
 import com.hyuse.chatbot.match.model.Match;
 import com.hyuse.chatbot.match.model.MatchStatus;
 import com.hyuse.chatbot.match.repository.MatchRepository;
 import com.hyuse.chatbot.match.service.MatchServiceInterface;
+import com.hyuse.chatbot.team.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,12 +44,14 @@ public class MatchServiceImpl implements MatchServiceInterface {
     @Override
     public void createMatch(MatchDTO matchDTO) {
         Match newMatch = new Match(
-                matchDTO.matchScoreboard(),
-                matchDTO.matchResult(),
-                matchDTO.matchStatus(),
+                matchDTO.teamA_Team(),
+                matchDTO.teamB_Team(),
                 matchDTO.dateHour(),
-                matchDTO.teamA(),
-                matchDTO.teamB()
+                matchDTO.matchStatus(),
+                matchDTO.teamAScore(),
+                matchDTO.teamBScore(),
+                matchDTO.matchResult(),
+                matchDTO.mapPool()
         );
         matchRepository.save(newMatch);
     }

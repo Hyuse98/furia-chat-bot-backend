@@ -27,7 +27,7 @@ public class GetTeamByTagCommand extends BaseCommand {
             StringBuilder response = new StringBuilder("Equipe: **");
             response.append(team.getTeamName());
             response.append("** - País: ");
-            response.append(team.getTeamCountry());
+            response.append(team.getTeamRegion());
             return createResponse(response.toString());
         } catch (Exception e) {
             return createResponse("Equipe não encontrada.");
