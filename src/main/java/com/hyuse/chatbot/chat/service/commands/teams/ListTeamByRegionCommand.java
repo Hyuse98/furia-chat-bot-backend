@@ -2,8 +2,8 @@ package com.hyuse.chatbot.chat.service.commands.teams;
 
 import com.hyuse.chatbot.chat.model.ChatMessage;
 import com.hyuse.chatbot.chat.service.BaseCommand;
-import com.hyuse.chatbot.team.model.Team;
-import com.hyuse.chatbot.team.service.TeamServiceInterface;
+import com.hyuse.chatbot.team.model.dto.TeamDTO;
+import com.hyuse.chatbot.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ListTeamByRegionCommand extends BaseCommand {
 
-    private final TeamServiceInterface service;
+    private final TeamService service;
 
     @Override
     public boolean supports(String command) {
@@ -25,7 +25,7 @@ public class ListTeamByRegionCommand extends BaseCommand {
 
         String region = input.substring("RegionTeams ".length()).trim();
         try {
-            List<Team> teams = service.listTeamsByCountry(region);
+            List<TeamDTO> teams = service.getByRegion(region);
 
             if (teams == null || teams.isEmpty()) {
                 return createResponse("Nenhuma equipe encontrada na região: **" + region + "**");
@@ -35,7 +35,7 @@ public class ListTeamByRegionCommand extends BaseCommand {
             response.append("<hr>");
 
             teams.forEach(team -> {
-                response.append("• **").append(team.getTeamName()).append("**: ").append(team.getTeamRegion()).append("\n");
+                response.append("• **").append(team.teamName()).append("**: ").append(team.teamRegion()).append("\n");
                 response.append("<hr>");
             });
 

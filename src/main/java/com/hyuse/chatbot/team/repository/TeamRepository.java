@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
     Optional<Team> findByTeamName(String name);
+
     Optional<Team> findByTeamTag(String tag);
 
     List<Team> findByTeamRegion(String region);

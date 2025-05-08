@@ -2,8 +2,8 @@ package com.hyuse.chatbot.chat.service.commands.teams;
 
 import com.hyuse.chatbot.chat.model.ChatMessage;
 import com.hyuse.chatbot.chat.service.BaseCommand;
-import com.hyuse.chatbot.team.model.Team;
-import com.hyuse.chatbot.team.service.TeamServiceInterface;
+import com.hyuse.chatbot.team.model.dto.TeamDTO;
+import com.hyuse.chatbot.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GetTeamByTagCommand extends BaseCommand {
 
-    private final TeamServiceInterface service;
+    private final TeamService service;
 
     @Override
     public boolean supports(String command) {
@@ -23,11 +23,11 @@ public class GetTeamByTagCommand extends BaseCommand {
         String tag = input.substring("TagTeam ".length()).trim();
 
         try {
-            Team team = service.getTeamByTeamTag(tag);
+            TeamDTO team = service.getByTag(tag);
             StringBuilder response = new StringBuilder("Equipe: **");
-            response.append(team.getTeamName());
+            response.append(team.teamName());
             response.append("** - País: ");
-            response.append(team.getTeamRegion());
+            response.append(team.teamRegion());
             return createResponse(response.toString());
         } catch (Exception e) {
             return createResponse("Equipe não encontrada.");
