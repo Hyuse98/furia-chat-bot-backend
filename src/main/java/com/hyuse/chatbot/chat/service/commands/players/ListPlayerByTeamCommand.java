@@ -2,9 +2,8 @@ package com.hyuse.chatbot.chat.service.commands.players;
 
 import com.hyuse.chatbot.chat.model.ChatMessage;
 import com.hyuse.chatbot.chat.service.BaseCommand;
-import com.hyuse.chatbot.chat.service.CommandHandler;
 import com.hyuse.chatbot.player.model.Player;
-import com.hyuse.chatbot.player.service.PlayerServiceInterface;
+import com.hyuse.chatbot.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +12,10 @@ import java.util.List;
 @Component
 public class ListPlayerByTeamCommand extends BaseCommand {
 
-    private final PlayerServiceInterface service;
+    private final PlayerService service;
 
     @Autowired
-    public ListPlayerByTeamCommand(PlayerServiceInterface service) {
+    public ListPlayerByTeamCommand(PlayerService service) {
         this.service = service;
     }
 

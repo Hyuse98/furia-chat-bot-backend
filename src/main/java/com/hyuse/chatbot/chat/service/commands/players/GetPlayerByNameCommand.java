@@ -2,19 +2,18 @@ package com.hyuse.chatbot.chat.service.commands.players;
 
 import com.hyuse.chatbot.chat.model.ChatMessage;
 import com.hyuse.chatbot.chat.service.BaseCommand;
-import com.hyuse.chatbot.chat.service.CommandHandler;
 import com.hyuse.chatbot.player.model.Player;
-import com.hyuse.chatbot.player.service.PlayerServiceInterface;
+import com.hyuse.chatbot.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GetPlayerByNameCommand extends BaseCommand {
 
-    private final PlayerServiceInterface service;
+    private final PlayerService service;
 
     @Autowired
-    public GetPlayerByNameCommand(PlayerServiceInterface service) {
+    public GetPlayerByNameCommand(PlayerService service) {
         this.service = service;
     }
 
@@ -32,7 +31,7 @@ public class GetPlayerByNameCommand extends BaseCommand {
         }
 
         String name = parts[1].trim();
-        Player player = service.getPlayerByName(name);
+        Player player = service.getByUsername(name);
 
         if (player == null) {
             return createResponse("Jogador não encontrado: **" + name + "**");
