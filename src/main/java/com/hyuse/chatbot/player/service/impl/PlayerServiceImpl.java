@@ -78,10 +78,10 @@ public class PlayerServiceImpl implements PlayerService {
             throw new EntityNotFoundException("Player not Found");
         }
 
-        Player playerToUpadate = mapper.toEntity(playerDTO);
-        playerToUpadate.setId(id);
+        Player playerToUpdate = mapper.toEntity(playerDTO);
+        playerToUpdate.setId(id);
 
-        Player updatedPlayer = playerRepository.save(playerToUpadate);
+        Player updatedPlayer = playerRepository.save(playerToUpdate);
         return mapper.toDto(updatedPlayer);
     }
 
