@@ -4,7 +4,7 @@ import com.hyuse.chatbot.chat.model.ChatMessage;
 import com.hyuse.chatbot.chat.service.BaseCommand;
 import com.hyuse.chatbot.match.model.Match;
 import com.hyuse.chatbot.match.model.MatchStatus;
-import com.hyuse.chatbot.match.service.MatchServiceInterface;
+import com.hyuse.chatbot.match.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ListClosedMatchesCommand extends BaseCommand {
 
-    private final MatchServiceInterface service;
+    private final MatchService service;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @Override
