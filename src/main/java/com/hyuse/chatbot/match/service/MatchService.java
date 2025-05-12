@@ -12,7 +12,6 @@ import java.util.List;
 
 public interface MatchService extends CrudService<MatchDTO, Long> {
 
-
     MatchDTO getByDate(LocalDateTime date);
     List<MatchDTO> getByTeam(String teamName);
     List<MatchDTO> getByStatus(MatchStatus matchStatus);
