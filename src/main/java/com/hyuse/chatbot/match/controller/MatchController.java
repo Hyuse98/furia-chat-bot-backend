@@ -1,12 +1,17 @@
 package com.hyuse.chatbot.match.controller;
 
+import com.hyuse.chatbot.match.model.MatchStatus;
 import com.hyuse.chatbot.match.model.dto.MatchDTO;
 import com.hyuse.chatbot.match.model.Match;
 import com.hyuse.chatbot.match.service.MatchService;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -21,7 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/matches")
+@RequestMapping("/api/matches")
 public class MatchController {
 
     private final MatchService matchService;
@@ -31,61 +36,92 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<Void> createMatch(MatchDTO matchDTO) {
-//        matchService.createMatch(matchDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Void> updateMatch(@PathVariable Long id, @RequestBody MatchDTO updatedMatch) {
-//        matchService.updateMatchById(id, updatedMatch);
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<EntityModel<Match>> getMatchById(@PathVariable Long id) {
-//        Match match = matchService.getMatchById(id);
-//        EntityModel<Match> entityModel = EntityModel.of(match,
-//                linkTo(methodOn(MatchController.class).getMatchById(id)).withSelfRel(),
-//                linkTo(methodOn(MatchController.class).listMatchs(Pageable.unpaged())).withRel("matches"));
-//        return ResponseEntity.ok(entityModel);
-//    }
-//
-//    @GetMapping("/date")
-//    public ResponseEntity<EntityModel<Match>> getMatchByDate(@RequestParam LocalDateTime date) {
-//        Match match = matchService.getMatchByDate(date);
-//        EntityModel<Match> entityModel = EntityModel.of(match,
-//                linkTo(methodOn(MatchController.class).getMatchByDate(date)).withSelfRel(),
-//                linkTo(methodOn(MatchController.class).listMatchs(Pageable.unpaged())).withRel("matches"));
-//        return ResponseEntity.ok(entityModel);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<PagedModel<EntityModel<Match>>> listMatchs(
-//            @PageableDefault(size = 10, page = 0) Pageable pageable) {
-//        Page<Match> matchesPage = matchService.listMatchs(pageable);
-//
-//        List<EntityModel<Match>> matchModels = matchesPage.getContent().stream()
-//                .map(match -> EntityModel.of(match,
-//                        linkTo(methodOn(MatchController.class).getMatchById(match.getId())).withSelfRel()))
-//                .collect(Collectors.toList());
-//
-//        PagedModel.PageMetadata metadata = new PagedModel.PageMetadata(
-//                matchesPage.getSize(),
-//                matchesPage.getNumber(),
-//                matchesPage.getTotalElements(),
-//                matchesPage.getTotalPages());
-//
-//        PagedModel<EntityModel<Match>> pagedModel = PagedModel.of(matchModels, metadata,
-//                linkTo(methodOn(MatchController.class).listMatchs(pageable)).withSelfRel());
-//
-//        return ResponseEntity.ok(pagedModel);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
-//        matchService.deleteMatchById(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @PostMapping
+    public ResponseEntity<MatchDTO> createMatch(@Valid @RequestBody MatchDTO matchDTO) {
+        try {
+            MatchDTO createdMatch = matchService.create(matchDTO);
+            return new ResponseEntity<>(createdMatch, HttpStatus.CREATED);
+        } catch (EntityExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MatchDTO> getMatchById(@PathVariable Long id) {
+        try {
+            MatchDTO matchDTO = matchService.getById(id);
+            return ResponseEntity.ok(matchDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MatchDTO>> getAllMatches() {
+        List<MatchDTO> matchDTOs = matchService.getAll();
+        return ResponseEntity.ok(matchDTOs);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long id, @Valid @RequestBody MatchDTO matchDTO) {
+        try {
+            MatchDTO updatedMatch = matchService.update(matchDTO, id);
+            return ResponseEntity.ok(updatedMatch);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
+        try {
+            matchService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/date/{date}")
+    public ResponseEntity<MatchDTO> getMatchByDate(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        try {
+            MatchDTO matchDTO = matchService.getByDate(date);
+            return ResponseEntity.ok(matchDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/team/{teamName}")
+    public ResponseEntity<List<MatchDTO>> getMatchesByTeam(@PathVariable String teamName) {
+        try {
+            List<MatchDTO> matchDTOs = matchService.getByTeam(teamName);
+            return ResponseEntity.ok(matchDTOs);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/status/{matchStatus}")
+    public ResponseEntity<List<MatchDTO>> getMatchesByStatus(@PathVariable MatchStatus matchStatus) {
+        try {
+            List<MatchDTO> matchDTOs = matchService.getByStatus(matchStatus);
+            return ResponseEntity.ok(matchDTOs);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
