@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,10 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     Optional<Match> findTop1ByDateHourBetween(LocalDateTime start, LocalDateTime end);
 
-    Optional<Match> findByDateHour(LocalDateTime date);
+    Optional<Match> findByMatchDate(LocalDateTime matchDate);
 
     List<Match> findAllByMatchStatus(MatchStatus matchStatus);
+
+    List<Match> findAllByTeamName(String teamName);
 }
 
